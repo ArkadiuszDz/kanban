@@ -1,0 +1,34 @@
+{
+  "board": {
+    "to-do": [
+      {
+        "id": "1",
+        "name": "Learn C#",
+        "status": "To Do",
+        "description": "I need to learn C# to get a better job"
+      },
+      {
+        "id": "2",
+        "name": "Learn MongoDB",
+        "status": "To Do",
+        "description": "I need to learn MongoDB"
+      }
+    ],
+    "in-progress": [
+      {
+        "id": "3",
+        "name": "Learn Redux-Thunk",
+        "status": "In Progress",
+        "description": "I need to learn Redux-Thunk"
+      }
+      ],
+    "done": [
+      {
+        "id": "4",
+        "name": "Learn Redux",
+        "status": "Done",
+        "description": "I need to learn Redux"
+      }
+    ]
+  }
+}
