@@ -6,17 +6,28 @@ import "../styles/status.scss";
 interface StatusProps {
   name: string;
   children: React.ReactNode;
+  changeStatus: (prevStatus: string, nextStatus: string, id: string) => void
 }
 
-const Status: FunctionComponent<StatusProps> = ({ children, name }) => {
+const Status: FunctionComponent<StatusProps> = ({ children, name, changeStatus }) => {
 
-  const [collectedProps, drop] = useDrop({
-    accept: Types.CARD
+  const [{ isOver }, drop] = useDrop({
+    accept: Types.CARD,
+    drop: (item, monitor) => {
+      if (monitor.getItem().status !== name) {
+        changeStatus(monitor.getItem().status, name, monitor.getItem().id)
+      }
+    },
+    collect: (monitor) => {
+      return {
+        isOver: !!monitor.isOver(),
+      } 
+    }
   })
 
   return (
-    <div className="task-status" ref={drop}>
-      <h2 className="title">{name}</h2>
+    <div id={name} className="task-status" ref={drop} style={{backgroundColor: isOver ? '#c8c8c8' : ''}}>
+      <h2 className="title">{name.split('-').join(' ')}</h2>
       <div className="cards-container">
         {children}
       </div>

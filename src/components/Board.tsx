@@ -53,9 +53,8 @@ const Board: FunctionComponent<ComponentProps> = ({addTask, removeTask, changeSt
         {
           board && 
           Object.keys(board).map((element: string, index: number) => {
-            let title=element.split('-').join(' ');
             return (
-              <Status key={`${element}-${index}`} name={title}>
+              <Status key={`${element}-${index}`} name={element} changeStatus={changeStatus}>
                 {
                   // @ts-ignore
                   board[element].map((card: CardData, index: number) => {

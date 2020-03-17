@@ -17,14 +17,14 @@ interface CardProps {
 const Card: FunctionComponent<CardProps> = ({id, name, status, description, removeTask, changeStatus, statusArray}) => {
 
   const [{ isDragging }, drag] = useDrag({
-    item: { type: Types.CARD, id: id },
+    item: { 
+      type: Types.CARD, 
+      id: id, 
+      status: status 
+    },
     collect: monitor => ({
       isDragging: !!monitor.isDragging(),
-      dupa: monitor
-    }),
-    begin: monitor => {
-      console.log(monitor, 'dragging started');
-    }
+    })
   });
 
   const removeHandler = (status: string, id: string) => {
@@ -36,7 +36,7 @@ const Card: FunctionComponent<CardProps> = ({id, name, status, description, remo
   }
 
   return (
-    <div className="card" id={id} ref={drag}>
+    <div className="card" id={id} ref={drag} style={{opacity: isDragging ? 0 : 1}}>
       <h2 className="title">{name}</h2>
       <p className="description">{description}</p>
       <p className="status">{status.split('-').join(' ')}</p>
