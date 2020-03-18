@@ -3,7 +3,8 @@ import './App.css';
 import  { Provider } from 'react-redux';
 import { store } from './logic/configure-store';
 import DnDContainer from './components/DnDContainer';
-import { getTasksList } from './logic/Board/actions';
+import { getTasksList, getData } from './logic/Board/actions';
+
 
 const board = {
   "board": {
@@ -42,7 +43,9 @@ const board = {
 
 function App() {
 
-  store.dispatch(getTasksList(board));
+  // store.dispatch(getTasksList(board));
+  // @ts-ignore
+  store.dispatch(getData());
 
   return (
     <Provider store={store}>

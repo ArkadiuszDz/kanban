@@ -1,4 +1,7 @@
 import { BoardDataStore, CardData } from "./store";
+import axios from 'axios';
+import { ThunkDispatch } from "redux-thunk";
+import { ThunkAction } from 'redux-thunk';
 
 // Declare - Constants
 export const constants = {
@@ -7,6 +10,16 @@ export const constants = {
   REMOVE_TASK: 'REMOVE_TASK',
   CHANGE_STATUS: 'CHANGE_STATUS'
 };
+
+export const getData = () => {
+  return (dispatch: ThunkDispatch<{}, void, any>) => {
+    axios.get('http://localhost:3001/data')
+    .then(res => {
+      dispatch(getTasksList(res.data))
+    })
+    .catch(err => console.log(err))
+  }
+}
 
 export const getTasksList = (data: BoardDataStore) => ({
   type: constants.GET_TASKS_LIST,

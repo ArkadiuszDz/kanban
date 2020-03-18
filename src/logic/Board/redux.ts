@@ -4,23 +4,7 @@ import { constants } from './actions';
 
 // Initial store
 export const BoardDataInitialStore: BoardDataStore = {
-  board: {
-    "to-do": [
-      {
-
-      }
-    ],
-    "in-progress": [
-      {
-
-      }
-    ],
-    done: [
-      {
-
-      }
-    ]
-  }
+  board: {}
 };
 
 

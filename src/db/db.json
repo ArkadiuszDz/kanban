@@ -1,43 +1,36 @@
 {
-  "board": [
-    {
-      "name": "To Do",
-      "cards": [
+  "data": {
+    "board": {
+      "to-do": [
         {
           "id": "1",
           "name": "Learn C#",
-          "stage": "To Do",
+          "status": "To Do",
           "description": "I need to learn C# to get a better job"
         },
         {
           "id": "2",
           "name": "Learn MongoDB",
-          "stage": "To Do",
+          "status": "To Do",
           "description": "I need to learn MongoDB"
         }
-      ]
-    },
-    {
-      "name": "In Progress",
-      "cards": [
+      ],
+      "in-progress": [
         {
           "id": "3",
           "name": "Learn Redux-Thunk",
-          "stage": "In Progress",
+          "status": "In Progress",
           "description": "I need to learn Redux-Thunk"
         }
-      ]
-    },
-    {
-      "name": "Done",
-      "cards": [
+        ],
+      "done": [
         {
           "id": "4",
           "name": "Learn Redux",
-          "stage": "Done",
+          "status": "Done",
           "description": "I need to learn Redux"
         }
       ]
     }
-  ]
+  }
 }
