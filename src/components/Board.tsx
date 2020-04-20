@@ -1,7 +1,7 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useState, useEffect } from 'react';
 import { BoardProps, BoardDispatch } from '../containers/Board';
 import { DeepReadonly } from 'ts-essentials';
-import { CardData } from '../logic/Board/store';
+import { Task, Column } from '../logic/Board/store';
 import Card from './Card';
 import Status from './Status';
 import '../styles/board.scss';
@@ -13,11 +13,15 @@ interface ComponentProps
     DeepReadonly<{}> {}
 
 
-const Board: FunctionComponent<ComponentProps> = ({addTask, removeTask, changeStatus, board}) => {
+const Board: FunctionComponent<ComponentProps> = ({addTask, removeTask, changeStatus, columns, tasks, getColumnsList}) => {
 
-  const statusArray = Object.keys(board).map((element: string) => {
-    return element;
-  });
+  const statusArray: string[] = [];
+
+  columns.forEach((element: Column) => {
+    statusArray.push(element.status);
+  })
+ 
+  useEffect(() => getColumnsList("development"), []);
 
   const [card, setCard] = useState({
     id: '',
@@ -36,45 +40,51 @@ const Board: FunctionComponent<ComponentProps> = ({addTask, removeTask, changeSt
 
   const saveTask = (e: any) => {
     e.preventDefault();
-    if (card.status !== '') {
-      addTask(card);
-      setCard({
-        id: '',
-        name: '',
-        description: '',
-        status: ''
-      });
-    }
+    // if (card.status !== '') {
+    //   addTask(card);
+    //   setCard({
+    //     id: '',
+    //     name: '',
+    //     description: '',
+    //     status: ''
+    //   });
+    // }
   }
 
   return (
     <div className="main">
       <div className="board">
         {
-          board && 
-          Object.keys(board).map((element: string, index: number) => {
+          columns && 
+          columns.map((element: Column, index: number) => {
             return (
-              <Status key={`${element}-${index}`} name={element} changeStatus={changeStatus}>
-                {
-                  // @ts-ignore
-                  board[element].map((card: CardData, index: number) => {
-                    return (
-                      <Card
-                        key={`card-${index}-${element}`}
-                        id={card.id}
-                        name={card.name}
-                        description={card.description}
-                        status={element}
-                        statusArray={statusArray}
-                        removeTask={removeTask}
-                        changeStatus={changeStatus}
-                      />
-                    )
+              <Status key={`${element.status}-${index}`} name={element.status} changeStatus={changeStatus}>
+                {         
+                  tasks &&
+                  Object.keys(tasks).map((key: string) => {
+
+                    return tasks[key].map((task: Task, i: number) => {
+                      if (element.status === key) {
+                        return (
+                          <Card
+                            key={`task-${i}-${element.status}`}
+                            id={task._id}
+                            name={task.name}
+                            description={task.description}
+                            status={task.status}
+                            statusArray={statusArray}
+                            removeTask={removeTask}
+                            changeStatus={changeStatus}
+                        />
+                        )
+                      }
+                    })
                   })
                 }
               </Status>
             )
           })
+
         }
       </div>
       <form>
@@ -90,11 +100,11 @@ const Board: FunctionComponent<ComponentProps> = ({addTask, removeTask, changeSt
           </div>
           <div className="input-wrapper">
             {
-              board &&
+              columns &&
               <select name="status" value={card.status} onChange={inputHandler}>
                 <option value="" hidden>Status</option>
                 {
-                  Object.keys(board).map((key: string) => {
+                  Object.keys(columns).map((key: string) => {
                     return (
                       <option value={key} key={key}>{key}</option>
                     )

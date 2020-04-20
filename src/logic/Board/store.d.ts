@@ -1,17 +1,27 @@
 import { DeepReadonly } from 'ts-essentials';
 
-interface CardData {
-  id: string;
+interface Task {
+  _id: string;
   name: string;
   status: string;
   description: string;
 }
 
-interface StageData {
-  [stage]: CardData[];
+interface TasksData {
+  [status]: Task[];
+}
+
+interface Column {
+  status: string;
+  order: string;
+}
+
+interface ColumnsData {
+  columnItems: Column[]
 }
 
 export interface BoardDataStore
   extends DeepReadonly<{
-    board: StageData;
+    columns: ColumnsData<{}>;
+    tasks: TaskData<{}>;
   }> {}

@@ -3,7 +3,12 @@ import './App.css';
 import  { Provider } from 'react-redux';
 import { store } from './logic/configure-store';
 import DnDContainer from './components/DnDContainer';
-import { getTasksList, getData } from './logic/Board/actions';
+import Main from './components/Main';
+import CreateBoard from './components/CreateBoard';
+import { getTasksList } from './logic/Board/actions';
+import { BrowserRouter, Route } from 'react-router-dom';
+import { BoardsContainer } from './containers/Boards';
+import { BoardContainer } from './containers/Board';
 
 
 const board = {
@@ -41,20 +46,28 @@ const board = {
   }
 }
 
+
+
 function App() {
 
   // store.dispatch(getTasksList(board));
   // @ts-ignore
-  store.dispatch(getData());
+  //store.dispatch(getData());
 
   return (
     <Provider store={store}>
-      <div className="App">
-        <header>
+      <BrowserRouter>
+        <div className="App">
+          <header>
 
-        </header>
-        <DnDContainer/>
-      </div>
+          </header>
+          <Route path="/" component={Main} exact={true} />
+          <Route path="/create-board" component={CreateBoard} />
+          <Route path="/board" component={DnDContainer} />
+          <Route path="/boards" component={BoardsContainer} exact={true}/>
+          <Route path="/boards/development" component={DnDContainer}/>
+        </div>
+      </BrowserRouter>
     </Provider>
   );
 }
