@@ -1,19 +1,22 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import { BoardProps, BoardDispatch } from '../containers/Board';
+import { RouteComponentProps } from 'react-router';
 import { DeepReadonly } from 'ts-essentials';
 import { Task, Column } from '../logic/Board/store';
 import Card from './Card';
 import Status from './Status';
 import '../styles/board.scss';
 
+
 interface ComponentProps
   extends
     BoardProps,
-    BoardDispatch,     
+    BoardDispatch,
+    RouteComponentProps<{ board: string }>,     
     DeepReadonly<{}> {}
 
 
-const Board: FunctionComponent<ComponentProps> = ({addTask, removeTask, changeStatus, columns, tasks, getColumnsList}) => {
+const Board: FunctionComponent<ComponentProps> = ({addTask, removeTask, changeStatus, columns, tasks, getColumnsList, match}) => {
 
   const statusArray: string[] = [];
 
@@ -53,6 +56,7 @@ const Board: FunctionComponent<ComponentProps> = ({addTask, removeTask, changeSt
 
   return (
     <div className="main">
+      <h1>{match.params.board}</h1>
       <div className="board">
         {
           columns && 
@@ -75,7 +79,7 @@ const Board: FunctionComponent<ComponentProps> = ({addTask, removeTask, changeSt
                             statusArray={statusArray}
                             removeTask={removeTask}
                             changeStatus={changeStatus}
-                        />
+                          />
                         )
                       }
                     })

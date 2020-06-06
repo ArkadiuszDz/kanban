@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { Action } from 'redux';
-
+import { RouteComponentProps, withRouter } from 'react-router';
 import Board from '../components/Board';
 
 // Logic & Store & Selectors & Helpers
@@ -9,6 +9,7 @@ import { RootStore } from '../logic/root-store';
 import { BoardDataStore, Task } from '../logic/Board/store';
 import { getTasksList, getColumnsList, addTask, removeTask, changeStatus } from '../logic/Board/actions';
 import { getColumnsData, getTasksData } from '../logic/Board/selectors';
+
 
 // Define data typefor container based on store part
 export interface BoardProps
@@ -26,7 +27,7 @@ export interface BoardDispatch {
 // Select store parts
 const mapStateToProps = (state: RootStore): BoardProps => ({
   columns: getColumnsData(state),
-  tasks: getTasksData(state)
+  tasks: getTasksData(state),
 });
 
 // Dispatch actions which change store
@@ -39,7 +40,7 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<RootStore, null, Action>): B
   changeStatus: (prevStatus: string, nextStatus: string, id: string) => dispatch(changeStatus(prevStatus, nextStatus, id))
 });
 
-export const BoardContainer = connect<
+export const BoardContainer = withRouter(connect<
   BoardProps,
   BoardDispatch,
   {},
@@ -47,4 +48,4 @@ export const BoardContainer = connect<
 >(
   mapStateToProps,
   mapDispatchToProps
-)(Board);
+)(Board));

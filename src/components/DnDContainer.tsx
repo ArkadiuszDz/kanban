@@ -5,9 +5,10 @@ import { BoardContainer } from '../containers/Board';
 
 
 const DnDContainer: FunctionComponent = () => {
+
   return (
     <DndProvider backend={Backend}>
-      <BoardContainer />
+      <BoardContainer/>
     </DndProvider>
   )
 }
