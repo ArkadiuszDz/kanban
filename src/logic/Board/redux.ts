@@ -13,7 +13,6 @@ export function BoardDataReducer(state = BoardDataInitialStore, action: Action) 
   switch (action.type) {
 
     case constants.SET_COLUMNS_LIST:
-      console.log('COLUMNS');
       return {
         ...state,
         // @ts-ignore
@@ -21,7 +20,6 @@ export function BoardDataReducer(state = BoardDataInitialStore, action: Action) 
       }
 
     case constants.SET_TASKS_LIST:
-      console.log('TASKS');
       return {
         ...state,
         // @ts-ignore

@@ -11,7 +11,6 @@ export function BoardsListReducer (state = BoardsListInitialStore, action: Actio
   switch (action.type) {
 
     case constants.SET_BOARDS_LIST:
-      console.log(action);
       return {
         ...state,
         // @ts-ignore

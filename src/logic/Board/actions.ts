@@ -44,10 +44,25 @@ export const setTasksList = (tasks: TasksData) => ({
   tasks
 });
 
-export const addTask = (task: Task) => ({
-  type: constants.ADD_TASK,
-  task
-});
+// export const addTask = (task: Task) => ({
+//   type: constants.ADD_TASK,
+//   task
+// });
+
+export const addTask = (boardName: string, task: Task): ThunkAction<void, RootStore, null, Action> => {
+  return (dispatch: ThunkDispatch<RootStore, null, Action>) => {
+    axios.post(`http://localhost:3001/create-task/${boardName}`,
+    {
+      task: {
+        ...task
+      }
+    })
+    .then(res => {
+      dispatch(getTasksList(boardName));
+    })
+    .catch(err => console.log(err))
+  }
+}
 
 export const removeTask = (status: string, id: string) => ({
   type: constants.REMOVE_TASK,

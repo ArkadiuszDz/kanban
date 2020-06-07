@@ -132,7 +132,7 @@ app.get('/boards/:dbName/columns', (req, res) => {
 
     const db = client.db(req.params.dbName);
     
-    db.collection('columns').find({}, {fields: {_id: 0}}).toArray((err, items) => {
+    db.collection('columns').find({}).toArray((err, items) => {
       res.send(items);
     });
 
@@ -176,7 +176,7 @@ app.post('/create-task/:dbName', (req, res) => {
       return console.log('Unable to connect to database.');
     }
     const db = client.db(req.params.dbName);
-    
+    console.log(req.body.task);
     db.collection('tasks').insertOne(  
       {
         ...req.body.task,

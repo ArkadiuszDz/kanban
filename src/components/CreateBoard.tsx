@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 interface Column {
-  name: string;
+  status: string;
 }
 
 const CreateBoard: FunctionComponent = () => {
@@ -31,7 +31,7 @@ const CreateBoard: FunctionComponent = () => {
   const addButtonHandler = (e: any) => {
     e.preventDefault();
 
-    setStatusArray(prevArray => [...prevArray, {name: statusName}]);
+    setStatusArray(prevArray => [...prevArray, {status: statusName}]);
     setStatusName('');
   }
 
@@ -40,10 +40,12 @@ const CreateBoard: FunctionComponent = () => {
     
     setStatusArray(prev => {
       return [...prev].filter(element => {
-        return element.name !== status;
+        return element.status !== status;
       })
     });
   }
+
+  // change it to asynchronous action
 
   const saveButtonHandler = (e: any) => {
     e.preventDefault();
@@ -88,9 +90,9 @@ const CreateBoard: FunctionComponent = () => {
           statusArray &&
           statusArray.map((status: Column, index: number) => {
             return (
-              <div className="input-wrapper status" key={`${status.name}-${index}`}>
-                {status.name}
-                <button onClick={e => removeButtonHandler(e, status.name)}>
+              <div className="input-wrapper status" key={`${status.status}-${index}`}>
+                {status.status}
+                <button onClick={e => removeButtonHandler(e, status.status)}>
                   Remove
                 </button>
               </div>

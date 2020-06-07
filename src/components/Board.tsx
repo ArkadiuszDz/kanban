@@ -24,7 +24,7 @@ const Board: FunctionComponent<ComponentProps> = ({addTask, removeTask, changeSt
     statusArray.push(element.status);
   })
  
-  useEffect(() => getColumnsList("development"), []);
+  useEffect(() => getColumnsList(match.params.board), []);
 
   const [card, setCard] = useState({
     id: '',
@@ -43,15 +43,15 @@ const Board: FunctionComponent<ComponentProps> = ({addTask, removeTask, changeSt
 
   const saveTask = (e: any) => {
     e.preventDefault();
-    // if (card.status !== '') {
-    //   addTask(card);
-    //   setCard({
-    //     id: '',
-    //     name: '',
-    //     description: '',
-    //     status: ''
-    //   });
-    // }
+    if (card.status !== '') {
+      addTask(match.params.board, card);
+      setCard({
+        id: '',
+        name: '',
+        description: '',
+        status: ''
+      });
+    }
   }
 
   return (
@@ -72,7 +72,7 @@ const Board: FunctionComponent<ComponentProps> = ({addTask, removeTask, changeSt
                         return (
                           <Card
                             key={`task-${i}-${element.status}`}
-                            id={task._id}
+                            id={task.id}
                             name={task.name}
                             description={task.description}
                             status={task.status}
@@ -94,23 +94,33 @@ const Board: FunctionComponent<ComponentProps> = ({addTask, removeTask, changeSt
       <form>
         <fieldset>
           <div className="input-wrapper">
-            <input name="id" type="text" value={card.id} onChange={inputHandler}/>
+            <label htmlFor="id">
+              Id
+            </label>
+            <input name="id" type="text" value={card.id} onChange={e => inputHandler(e)}/>
           </div>
           <div className="input-wrapper">
-            <input name="name" type="text" value={card.name} onChange={inputHandler}/>
+            <label htmlFor="name">
+              Name
+            </label>
+            <input name="name" type="text" value={card.name} onChange={e => inputHandler(e)}/>
           </div>
           <div className="input-wrapper">
-            <input name="description" type="text" value={card.description} onChange={inputHandler}/>
+            <label htmlFor="description">
+              Description
+            </label>
+            <input name="description" type="text" value={card.description} onChange={e => inputHandler(e)}/>
           </div>
           <div className="input-wrapper">
             {
               columns &&
-              <select name="status" value={card.status} onChange={inputHandler}>
+              <select name="status" value={card.status} onChange={e => inputHandler(e)}>
                 <option value="" hidden>Status</option>
                 {
-                  Object.keys(columns).map((key: string) => {
+                  columns.map((element: Column, index: number) => {
+                    console.log(element);
                     return (
-                      <option value={key} key={key}>{key}</option>
+                      <option value={element._id} key={`${element.status}--${index}`}>{element.status}</option>
                     )
                   })
                 }

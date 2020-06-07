@@ -1,7 +1,7 @@
 import { DeepReadonly } from 'ts-essentials';
 
 interface Task {
-  _id: string;
+  id: string;
   name: string;
   status: string;
   description: string;
@@ -13,7 +13,8 @@ interface TasksData {
 
 interface Column {
   status: string;
-  order: string;
+  order?: string;
+  _id: string;
 }
 
 interface ColumnsData {

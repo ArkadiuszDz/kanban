@@ -19,7 +19,7 @@ export interface BoardProps
 export interface BoardDispatch {
   getTasksList: (boardName: string) => void;
   getColumnsList: (boardName: string) => void;
-  addTask: (task: Task) => void;
+  addTask: (boardName: string, task: Task) => void;
   removeTask: (status: string, id: string) => void;
   changeStatus: (prevStatus: string, nextStatus: string, id: string) => void
 }
@@ -34,8 +34,8 @@ const mapStateToProps = (state: RootStore): BoardProps => ({
 const mapDispatchToProps = (dispatch: ThunkDispatch<RootStore, null, Action>): BoardDispatch => ({
   getTasksList: (boardName: string) => dispatch(getTasksList(boardName)),
   getColumnsList: (boardName: string) => dispatch(getColumnsList(boardName)),
+  addTask: (boardName: string,task: Task) => dispatch(addTask(boardName,task)),
   // change those below to asynchronous
-  addTask: (task: Task) => dispatch(addTask(task)),
   removeTask: (status: string, id: string) => dispatch(removeTask(status, id)),
   changeStatus: (prevStatus: string, nextStatus: string, id: string) => dispatch(changeStatus(prevStatus, nextStatus, id))
 });
