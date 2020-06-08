@@ -27,7 +27,6 @@ const Board: FunctionComponent<ComponentProps> = ({addTask, removeTask, changeSt
   useEffect(() => getColumnsList(match.params.board), []);
 
   const [card, setCard] = useState({
-    id: '',
     name: '',
     description: '',
     status: ''
@@ -46,7 +45,6 @@ const Board: FunctionComponent<ComponentProps> = ({addTask, removeTask, changeSt
     if (card.status !== '') {
       addTask(match.params.board, card);
       setCard({
-        id: '',
         name: '',
         description: '',
         status: ''
@@ -72,7 +70,7 @@ const Board: FunctionComponent<ComponentProps> = ({addTask, removeTask, changeSt
                         return (
                           <Card
                             key={`task-${i}-${element.status}`}
-                            id={task.id}
+                            id={task._id}
                             name={task.name}
                             description={task.description}
                             status={task.status}
@@ -93,12 +91,6 @@ const Board: FunctionComponent<ComponentProps> = ({addTask, removeTask, changeSt
       </div>
       <form>
         <fieldset>
-          <div className="input-wrapper">
-            <label htmlFor="id">
-              Id
-            </label>
-            <input name="id" type="text" value={card.id} onChange={e => inputHandler(e)}/>
-          </div>
           <div className="input-wrapper">
             <label htmlFor="name">
               Name

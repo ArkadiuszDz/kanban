@@ -1,4 +1,4 @@
-import { Task, ColumnsData, TasksData } from "./store";
+import { Task, NewTask, ColumnsData, TasksData } from "./store";
 import axios from 'axios';
 import { ThunkDispatch, ThunkAction } from "redux-thunk";
 import { Action } from 'redux';
@@ -49,7 +49,7 @@ export const setTasksList = (tasks: TasksData) => ({
 //   task
 // });
 
-export const addTask = (boardName: string, task: Task): ThunkAction<void, RootStore, null, Action> => {
+export const addTask = (boardName: string, task: NewTask): ThunkAction<void, RootStore, null, Action> => {
   return (dispatch: ThunkDispatch<RootStore, null, Action>) => {
     axios.post(`http://localhost:3001/create-task/${boardName}`,
     {

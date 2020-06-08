@@ -9,7 +9,7 @@ import { getTasksList } from './logic/Board/actions';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { BoardsContainer } from './containers/Boards';
 import { BoardContainer } from './containers/Board';
-
+import "./styles/global.scss";
 
 
 function App() {

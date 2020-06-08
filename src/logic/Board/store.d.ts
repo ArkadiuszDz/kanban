@@ -1,7 +1,13 @@
 import { DeepReadonly } from 'ts-essentials';
 
 interface Task {
-  id: string;
+  _id: string;
+  name: string;
+  status: string;
+  description: string;
+}
+
+interface NewTask {
   name: string;
   status: string;
   description: string;
