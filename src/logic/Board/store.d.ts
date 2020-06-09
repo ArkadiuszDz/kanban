@@ -1,16 +1,14 @@
 import { DeepReadonly } from 'ts-essentials';
 
-interface Task {
-  _id: string;
-  name: string;
-  status: string;
-  description: string;
-}
 
 interface NewTask {
   name: string;
   status: string;
   description: string;
+}
+
+interface Task extends NewTask {
+  _id: string;
 }
 
 interface TasksData {

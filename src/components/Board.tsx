@@ -70,13 +70,14 @@ const Board: FunctionComponent<ComponentProps> = ({addTask, removeTask, changeSt
                         return (
                           <Card
                             key={`task-${i}-${element.status}`}
-                            id={task._id}
-                            name={task.name}
-                            description={task.description}
-                            status={task.status}
+                            // id={task._id}
+                            // name={task.name}
+                            // description={task.description}
+                            // status={task.status}
                             statusArray={statusArray}
                             removeTask={removeTask}
                             changeStatus={changeStatus}
+                            task={task}
                           />
                         )
                       }

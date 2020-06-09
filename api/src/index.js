@@ -197,7 +197,7 @@ app.post('/update-task/:dbName/:task', (req, res) => {
     const db = client.db(req.params.dbName);
     
     db.collection('tasks').findOneAndUpdate(  
-      { _id: ObjectId(req.params.task) },
+      { _id: ObjectId(req.params.task._id) },
       { 
         $set: {
           status: req.body.task.status,

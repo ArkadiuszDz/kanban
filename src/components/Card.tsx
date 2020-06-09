@@ -1,26 +1,28 @@
 import React, { FunctionComponent } from 'react';
 import { useDrag } from 'react-dnd';
 import { Types } from '../constants/dnd';
+import { Task } from '../logic/Board/store';
 import '../styles/card.scss';
 
 interface CardProps {
-  id: string;
-  name: string;
-  status: string;
-  description: string;
+  // id: string;
+  // name: string;
+  // status: string;
+  // description: string;
   statusArray: string[];
+  task: Task;
   removeTask: (status: string, id: string) => void,
   changeStatus: (prevStatus: string, nextStatus: string, id: string) => void
 }
 
 
-const Card: FunctionComponent<CardProps> = ({id, name, status, description, removeTask, changeStatus, statusArray}) => {
+const Card: FunctionComponent<CardProps> = ({task, removeTask, changeStatus, statusArray}) => {
 
   const [{ isDragging }, drag] = useDrag({
     item: { 
       type: Types.CARD, 
-      id: id, 
-      status: status 
+      id: task._id, 
+      status: task.status 
     },
     collect: monitor => ({
       isDragging: !!monitor.isDragging(),
@@ -36,20 +38,20 @@ const Card: FunctionComponent<CardProps> = ({id, name, status, description, remo
   }
 
   return (
-    <div className="card" id={id} ref={drag} style={{opacity: isDragging ? 0 : 1}}>
-      <h2 className="title">{name}</h2>
-      <p className="description">{description}</p>
-      <p className="status">{status.split('-').join(' ')}</p>
+    <div className="card" id={task._id} ref={drag} style={{opacity: isDragging ? 0 : 1}}>
+      <h2 className="title">{task.name}</h2>
+      <p className="description">{task.description}</p>
+      <p className="status">{task.status.split('-').join(' ')}</p>
       <div className="btn-wrapper">
         <div className="btn">
           <button onClick={e => {
             e.preventDefault();
-            removeHandler(status, id);
+            removeHandler(task.status, task._id);
           }}>Delete</button>
         </div>
       </div>
       <div className="select-wrapper">
-        <select onChange={e => changeStatusHandler(status, e.target.value, id)}>
+        <select onChange={e => changeStatusHandler(task.status, e.target.value, task._id)}>
           <option value="" hidden>Change status</option>
           {
             statusArray &&
@@ -58,7 +60,7 @@ const Card: FunctionComponent<CardProps> = ({id, name, status, description, remo
                 <option
                   value={element}
                   key={`${element}-${index}`}
-                  disabled={status === element}
+                  disabled={task.status === element}
                 >{element.split('-').join(' ')}</option>
               )
             })

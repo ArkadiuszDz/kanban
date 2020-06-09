@@ -76,3 +76,18 @@ export const changeStatus = (prevStatus: string, nextStatus: string, id: string)
   nextStatus,
   id
 })
+
+export const editTask = (boardName: string, task: Task): ThunkAction<void, RootStore, null, Action> => {
+  return (dispatch: ThunkDispatch<RootStore, null, Action>) => {
+    axios.post(`http://localhost:3001/update-task/${boardName}/${task._id}`,
+    {
+      task: {
+        ...task
+      }
+    })
+    .then(res => {
+      dispatch(getTasksList(boardName));
+    })
+    .catch(err => console.log(err))
+  }
+}
