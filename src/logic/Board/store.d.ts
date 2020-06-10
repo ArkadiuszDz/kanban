@@ -9,6 +9,7 @@ interface NewTask {
 
 interface Task extends NewTask {
   _id: string;
+  status_id: string;
 }
 
 interface TasksData {

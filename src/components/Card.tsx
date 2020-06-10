@@ -1,22 +1,23 @@
 import React, { FunctionComponent } from 'react';
 import { useDrag } from 'react-dnd';
 import { Types } from '../constants/dnd';
-import { Task } from '../logic/Board/store';
+import { CardProps, CardDispatch } from '../containers/Card';
+import { DeepReadonly } from 'ts-essentials';
+import { Task, Column } from '../logic/Board/store';
 import '../styles/card.scss';
 
-interface CardProps {
-  // id: string;
-  // name: string;
-  // status: string;
-  // description: string;
-  statusArray: string[];
-  task: Task;
-  removeTask: (status: string, id: string) => void,
-  changeStatus: (prevStatus: string, nextStatus: string, id: string) => void
-}
+interface CardItemProps
+  extends
+    CardProps,
+    CardDispatch,   
+    DeepReadonly<{}> {
+      task: Task;
+      columns: Column[];
+      boardName: string;
+    }
 
 
-const Card: FunctionComponent<CardProps> = ({task, removeTask, changeStatus, statusArray}) => {
+const Card: FunctionComponent<CardItemProps> = ({task, columns, removeTask, editTask, boardName}) => {
 
   const [{ isDragging }, drag] = useDrag({
     item: { 
@@ -30,11 +31,13 @@ const Card: FunctionComponent<CardProps> = ({task, removeTask, changeStatus, sta
   });
 
   const removeHandler = (status: string, id: string) => {
-    removeTask(status, id);
+    //removeTask(status, id);
   }
 
-  const changeStatusHandler = (prevStatus: string, nextStatus: string, id: string) => {
-    changeStatus(prevStatus, nextStatus, id);
+  const editTaskHandler = (boardName: string, task: Task) => {
+    editTask(boardName, {
+      ...task
+    });
   }
 
   return (
@@ -51,17 +54,21 @@ const Card: FunctionComponent<CardProps> = ({task, removeTask, changeStatus, sta
         </div>
       </div>
       <div className="select-wrapper">
-        <select onChange={e => changeStatusHandler(task.status, e.target.value, task._id)}>
+        <select onChange={e => editTaskHandler(boardName,{
+              ...task,
+              status_id: e.target.value
+            }
+          )}>
           <option value="" hidden>Change status</option>
           {
-            statusArray &&
-            statusArray.map((element: string, index: number) => {
+            columns &&
+            columns.map((element: Column, index: number) => {
               return (
                 <option
-                  value={element}
-                  key={`${element}-${index}`}
-                  disabled={task.status === element}
-                >{element.split('-').join(' ')}</option>
+                  value={element._id}
+                  key={`${element.status}-${index}`}
+                  disabled={task.status === element.status}
+                >{element.status.split('-').join(' ')}</option>
               )
             })
           }

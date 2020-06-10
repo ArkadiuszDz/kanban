@@ -3,7 +3,7 @@ import { BoardProps, BoardDispatch } from '../containers/Board';
 import { RouteComponentProps } from 'react-router';
 import { DeepReadonly } from 'ts-essentials';
 import { Task, Column } from '../logic/Board/store';
-import Card from './Card';
+import { CardContainer } from '../containers/Card';
 import Status from './Status';
 import '../styles/board.scss';
 
@@ -23,7 +23,8 @@ const Board: FunctionComponent<ComponentProps> = ({addTask, removeTask, changeSt
   columns.forEach((element: Column) => {
     statusArray.push(element.status);
   })
- 
+
+  // eslint-disable-next-line
   useEffect(() => getColumnsList(match.params.board), []);
 
   const [card, setCard] = useState({
@@ -68,18 +69,19 @@ const Board: FunctionComponent<ComponentProps> = ({addTask, removeTask, changeSt
                     return tasks[key].map((task: Task, i: number) => {
                       if (element.status === key) {
                         return (
-                          <Card
+                          <CardContainer
                             key={`task-${i}-${element.status}`}
                             // id={task._id}
                             // name={task.name}
                             // description={task.description}
                             // status={task.status}
-                            statusArray={statusArray}
-                            removeTask={removeTask}
-                            changeStatus={changeStatus}
+                            boardName={match.params.board}
+                            columns={columns}
                             task={task}
                           />
                         )
+                      } else {
+                        return false;
                       }
                     })
                   })
@@ -111,7 +113,6 @@ const Board: FunctionComponent<ComponentProps> = ({addTask, removeTask, changeSt
                 <option value="" hidden>Status</option>
                 {
                   columns.map((element: Column, index: number) => {
-                    console.log(element);
                     return (
                       <option value={element._id} key={`${element.status}--${index}`}>{element.status}</option>
                     )

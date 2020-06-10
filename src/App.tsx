@@ -5,10 +5,8 @@ import { store } from './logic/configure-store';
 import DnDContainer from './components/DnDContainer';
 import Main from './components/Main';
 import CreateBoard from './components/CreateBoard';
-import { getTasksList } from './logic/Board/actions';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { BoardsContainer } from './containers/Boards';
-import { BoardContainer } from './containers/Board';
 import "./styles/global.scss";
 
 

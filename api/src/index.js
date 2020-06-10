@@ -63,7 +63,8 @@ app.get('/boards/:dbName/tasks', (req, res) => {
           "name": 1,
           "description": 1,
           "comment": 1,
-          "status": { $arrayElemAt: ["$status.status", 0] }
+          "status": { $arrayElemAt: ["$status.status", 0] },
+          "status_id": { $arrayElemAt: ["$status._id", 0] },
         }
       },
       {
@@ -176,7 +177,6 @@ app.post('/create-task/:dbName', (req, res) => {
       return console.log('Unable to connect to database.');
     }
     const db = client.db(req.params.dbName);
-    console.log(req.body.task);
     db.collection('tasks').insertOne(  
       {
         ...req.body.task,
@@ -195,12 +195,12 @@ app.post('/update-task/:dbName/:task', (req, res) => {
       return console.log('Unable to connect to database.');
     }
     const db = client.db(req.params.dbName);
-    
+
     db.collection('tasks').findOneAndUpdate(  
-      { _id: ObjectId(req.params.task._id) },
+      { _id: ObjectId(req.params.task) },
       { 
         $set: {
-          status: req.body.task.status,
+          status: ObjectId(req.body.task.status_id),
           description: req.body.task.description,
           comment: req.body.task.comment
         } 

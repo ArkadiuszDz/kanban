@@ -1,12 +1,12 @@
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { Action } from 'redux';
-import { RouteComponentProps, withRouter } from 'react-router';
+import { withRouter } from 'react-router';
 import Board from '../components/Board';
 
 // Logic & Store & Selectors & Helpers
 import { RootStore } from '../logic/root-store';
-import { BoardDataStore, Task, NewTask } from '../logic/Board/store';
+import { BoardDataStore, NewTask } from '../logic/Board/store';
 import { getTasksList, getColumnsList, addTask, removeTask, changeStatus } from '../logic/Board/actions';
 import { getColumnsData, getTasksData } from '../logic/Board/selectors';
 

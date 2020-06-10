@@ -14,6 +14,7 @@ interface ComponentProps
 
 const Boards: FunctionComponent<ComponentProps> = ({ getBoards, boards }) => {
 
+  // eslint-disable-next-line
   useEffect(() => getBoards(), []);
 
   return (
