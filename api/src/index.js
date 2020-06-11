@@ -61,8 +61,8 @@ app.get('/boards/:dbName/tasks', (req, res) => {
         $project: {
           "_id": 1,
           "name": 1,
-          "description": 1,
-          "comment": 1,
+          // "description": 1,
+          // "comment": 1,
           "status": { $arrayElemAt: ["$status.status", 0] },
           "status_id": { $arrayElemAt: ["$status._id", 0] },
         }

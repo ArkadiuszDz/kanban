@@ -4,7 +4,7 @@ import { DeepReadonly } from 'ts-essentials';
 interface NewTask {
   name: string;
   status: string;
-  description: string;
+  // description: string;
 }
 
 interface Task extends NewTask {

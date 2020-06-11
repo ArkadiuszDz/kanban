@@ -43,7 +43,7 @@ const Card: FunctionComponent<CardItemProps> = ({task, columns, removeTask, edit
   return (
     <div className="card" id={task._id} ref={drag} style={{opacity: isDragging ? 0 : 1}}>
       <h2 className="title">{task.name}</h2>
-      <p className="description">{task.description}</p>
+      {/* <p className="description">{task.description}</p> */}
       <p className="status">{task.status.split('-').join(' ')}</p>
       <div className="btn-wrapper">
         <div className="btn">
