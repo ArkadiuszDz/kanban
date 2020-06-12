@@ -3,6 +3,7 @@ import { BoardProps, BoardDispatch } from '../containers/Board';
 import { RouteComponentProps } from 'react-router';
 import { DeepReadonly } from 'ts-essentials';
 import { Task, Column } from '../logic/Board/store';
+import { Link } from 'react-router-dom';
 import { CardContainer } from '../containers/Card';
 import Status from './Status';
 import '../styles/board.scss';
@@ -69,16 +70,19 @@ const Board: FunctionComponent<ComponentProps> = ({addTask, removeTask, changeSt
                     return tasks[key].map((task: Task, i: number) => {
                       if (element.status === key) {
                         return (
-                          <CardContainer
-                            key={`task-${i}-${element.status}`}
-                            // id={task._id}
-                            // name={task.name}
-                            // description={task.description}
-                            // status={task.status}
-                            boardName={match.params.board}
-                            columns={columns}
-                            task={task}
-                          />
+                          <Link  
+                            key={`task-${i}-${element.status}`} 
+                            to={{ 
+                              pathname: `/${match.params.board}/${task._id}`,
+                              state: { modal: true }
+                            }}
+                          >
+                            <CardContainer
+                              boardName={match.params.board}
+                              columns={columns}
+                              task={task}
+                            />
+                          </Link>
                         )
                       } else {
                         return false;

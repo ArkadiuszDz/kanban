@@ -6,6 +6,7 @@ import Modal from '../components/Modal';
 // Logic & Store & Selectors & Helpers
 import { RootStore } from '../logic/root-store';
 import { ModalDataStore, Task } from '../logic/Modal/store';
+import { withRouter } from 'react-router';
 import { getTaskDetails } from '../logic/Modal/actions';
 import { getModalData } from '../logic/Modal/selectors';
 
@@ -29,12 +30,14 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<RootStore, null, Action>): M
   getTaskDetails: (boardName: string, task: Task) => dispatch(getTaskDetails(boardName, task)),
 });
 
-export const ModalContainer = connect<
-  ModalProps,
-  ModalDispatch,
-  {},
-  RootStore
->(
-  mapStateToProps,
-  mapDispatchToProps
-)(Modal);
+// export const ModalContainer = connect<
+//   ModalProps,
+//   ModalDispatch,
+//   {},
+//   RootStore
+// >(
+//   mapStateToProps,
+//   mapDispatchToProps
+// )(Modal);
+
+export const ModalContainer = withRouter(Modal);
