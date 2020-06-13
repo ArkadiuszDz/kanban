@@ -73,7 +73,7 @@ const Board: FunctionComponent<ComponentProps> = ({addTask, removeTask, changeSt
                           <Link  
                             key={`task-${i}-${element.status}`} 
                             to={{ 
-                              pathname: `/${match.params.board}/${task._id}`,
+                              pathname: `/boards/${match.params.board}/${task._id}`,
                               state: { modal: true }
                             }}
                           >

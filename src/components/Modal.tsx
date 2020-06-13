@@ -1,20 +1,22 @@
 import React, { FunctionComponent } from 'react';
 // import { Task } from '../logic/Board/store';
-import { RouteComponentProps } from 'react-router';
+import { RouteComponentProps, StaticContext } from 'react-router';
+// import { LocationState } from 'history';
 
 
 interface ModalItemProps 
-  extends RouteComponentProps<{ task_id: string }> {
+  extends RouteComponentProps<{ task_id: string }, StaticContext, { modal: boolean }> {
 
 }
 
 
-const Modal: FunctionComponent<ModalItemProps> = () => {
+const Modal: FunctionComponent<ModalItemProps> = ({ location, match }) => {
+
   return (
-    true ? // here add isModal variable which comes from props or store (to be decided)
+    location.state.modal ?
     <div className="modal-window">
       <div className="modal-inner">
-
+        Modal window
       </div>
     </div>
     : 
