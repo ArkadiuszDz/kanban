@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 import { CardContainer } from '../containers/Card';
 import Status from './Status';
 import '../styles/board.scss';
+import { Route } from 'react-router-dom';
+import { ModalContainer } from '../containers/Modal';
 
 
 interface ComponentProps
@@ -56,17 +58,18 @@ const Board: FunctionComponent<ComponentProps> = ({addTask, removeTask, changeSt
 
   return (
     <div className="main">
+      <Route path="/boards/:board/:task_id" component={ModalContainer} exact={true}/>
       <h1>{match.params.board}</h1>
       <div className="board">
         {
           columns && 
           columns.map((element: Column, index: number) => {
             return (
-              <Status key={`${element.status}-${index}`} name={element.status} changeStatus={changeStatus}>
+              <Status key={`${element.status}-${index}`} name={element.status} changeStatus={changeStatus}>                      
                 {         
                   tasks &&
                   Object.keys(tasks).map((key: string) => {
-
+                    
                     return tasks[key].map((task: Task, i: number) => {
                       if (element.status === key) {
                         return (
@@ -85,7 +88,7 @@ const Board: FunctionComponent<ComponentProps> = ({addTask, removeTask, changeSt
                           </Link>
                         )
                       } else {
-                        return false;
+                        return null;
                       }
                     })
                   })

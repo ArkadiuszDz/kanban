@@ -8,8 +8,8 @@ interface Task {
   comments: string[];
 }
 
+
 export interface ModalDataStore
   extends DeepReadonly<{
     taskItem: Task<{}>;
-    visible: boolean;
   }> {}

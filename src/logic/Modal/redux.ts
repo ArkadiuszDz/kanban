@@ -4,8 +4,7 @@ import { constants } from './actions';
 
 // Initial store
 export const ModalDataInitialStore: ModalDataStore = {
-  taskItem: {},
-  visible: false
+  taskItem: {}
 };
 
 

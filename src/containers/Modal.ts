@@ -5,7 +5,7 @@ import Modal from '../components/Modal';
 
 // Logic & Store & Selectors & Helpers
 import { RootStore } from '../logic/root-store';
-import { ModalDataStore, Task } from '../logic/Modal/store';
+import { ModalDataStore } from '../logic/Modal/store';
 import { withRouter } from 'react-router';
 import { getTaskDetails } from '../logic/Modal/actions';
 import { getModalData } from '../logic/Modal/selectors';
@@ -17,27 +17,26 @@ export interface ModalProps
 
 // Define data type for actions which change store
 export interface ModalDispatch {
-  getTaskDetails: (boardName: string, task: Task) => void;
+  getTaskDetails: (boardName: string, taskId: string) => void;
 }
 
 // Select store parts
 const mapStateToProps = (state: RootStore): ModalProps => ({
-  taskItem: getModalData(state),
+  taskItem: getModalData(state)
 });
 
 // Dispatch actions which change store
 const mapDispatchToProps = (dispatch: ThunkDispatch<RootStore, null, Action>): ModalDispatch => ({
-  getTaskDetails: (boardName: string, task: Task) => dispatch(getTaskDetails(boardName, task)),
+  getTaskDetails: (boardName: string, taskId: string) => dispatch(getTaskDetails(boardName, taskId)),
 });
 
-// export const ModalContainer = connect<
-//   ModalProps,
-//   ModalDispatch,
-//   {},
-//   RootStore
-// >(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(Modal);
+export const ModalContainer = withRouter(connect<
+  ModalProps,
+  ModalDispatch,
+  {},
+  RootStore
+>(
+  mapStateToProps,
+  mapDispatchToProps
+)(Modal));
 
-export const ModalContainer = withRouter(Modal);

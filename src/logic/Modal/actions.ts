@@ -7,21 +7,21 @@ import { RootStore } from '../root-store';
 
 // Declare - Constants
 export const constants = {
-  SET_TASK_DATA: 'SET_TASKS_LIST',
+  SET_TASK_DATA: 'SET_TASKS_DATA',
 };
 
 
-export const setTaskData = (boardName: string, task: Task) => ({
+export const setTaskData = (task: Task) => ({
   type: constants.SET_TASK_DATA,
   task
 });
 
 
-export const getTaskDetails = (boardName: string, task: Task): ThunkAction<void, RootStore, null, Action> => {
+export const getTaskDetails = (boardName: string, taskId: string): ThunkAction<void, RootStore, null, Action> => {
   return (dispatch: ThunkDispatch<RootStore, null, Action>) => {
-    axios.get(`http://localhost:3001/update-task/${boardName}/${task._id}`)
+    axios.get(`http://localhost:3001/boards/${boardName}/tasks/${taskId}`)
     .then(res => {
-      dispatch(setTaskData(boardName, task));
+      dispatch(setTaskData(res.data));
     })
     .catch(err => console.log(err))
   }

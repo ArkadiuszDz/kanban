@@ -114,7 +114,7 @@ app.get('/boards/:dbName/tasks/:task', (req, res) => {
       return console.log('Unable to connect to database.');
     }
     const db = client.db(req.params.dbName);
-
+    // do aggregation for status
     db.collection('tasks').findOne(
       { _id: ObjectId(req.params.task) }, 
     ).then(task => {
@@ -180,6 +180,7 @@ app.post('/create-task/:dbName', (req, res) => {
     db.collection('tasks').insertOne(  
       {
         ...req.body.task,
+        comments: [],
         status: ObjectId(req.body.task.status) 
       }
     ).then(task => {
